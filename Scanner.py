@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-
 import sys
+import argparse
+import os
 from time import sleep
 from tokenize import group
 import MODParser as mp
@@ -8,74 +9,92 @@ import rospy
 from std_msgs.msg import String
 import numpy as np
 import moveit_commander
-import moveit_msgs.msg
 import geometry_msgs.msg
 import math
 
 
-def Scanner():
+def scan(fp):
+    # initialiaze moveit commander to interface with robot
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node("move_group_tutorial", anonymous=True)
 
+    # create a node for this script
+    rospy.init_node("ssr_scan", anonymous=True)
+    
+    # Create a robot object
     robot = moveit_commander.RobotCommander()
-    scene = moveit_commander.PlanningSceneInterface()
 
+    # Create a scene object: this allows you to add objects for collision checking
+    scene = moveit_commander.PlanningSceneInterface()
+    
+    # This is the name of the joint group for the ABB IRB 2400 from the 
+    # ABB ROS package moveit config
     group_name = "manipulator"
+
+    # Isolating the move group object which allows us to get the functions we
+    # care about like "plan" and "go" for movement
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
-    planning_frame = move_group.get_planning_frame()
-    print(f"Planning Frame: {planning_frame}")
-
-    display_trajectory_publisher = rospy.Publisher(
-    "/move_group/display_planned_path",
-    moveit_msgs.msg.DisplayTrajectory,
-    queue_size=20,
+    # setting up a subscriber to the AK RGB image topic 
+    rgb_subscriber = rospy.Subscriber(
+        "/rgb/image_raw"
     )
 
-    eef_link = move_group.get_end_effector_link()
-    print(f"End effector link: {eef_link}")
-    group_names = robot.get_group_names()
+    depth_subscriber = rospy.Subscriber(
+        "/depth/image_raw",
 
-    print(f"Group names: {group_names}")
-
-    tau = 2*math.pi
+    )
 
     joint_goal = move_group.get_current_joint_values()
-    joint_goal[0] = 0
-    joint_goal[1] = -tau / 8
-    joint_goal[2] = 0
-    joint_goal[3] = -tau / 4
-    joint_goal[4] = 0
-    joint_goal[5] = tau / 6  # 1/6 of a turn
 
-    move_group.go(wait=True)
+    # Move to "Home/All-Zeros" position
+    joint_goal[0] = 0
+    joint_goal[1] = 0
+    joint_goal[2] = 0
+    joint_goal[3] = 0
+    joint_goal[4] = 0
+    joint_goal[5] = 0
+
+    move_group.go(wait=True) # Execute the move command
     move_group.stop()
 
-    poses = mp.read_file(r"/home/logan/ROS/abb_ros/AugmentedRoboticFabrication/T_ROB/doTest_100_T_ROB1.mod") 
+    poses = mp.read_file(filepath=fp) 
 
 
     for pose in poses:
         pose_goal = geometry_msgs.msg.Pose()
         quaternions = np.array(pose[1])
         position = np.array(pose[0])
-        pose_goal.orientation.x = quaternions.item(0)
-        pose_goal.orientation.y = quaternions.item(1)
-        pose_goal.orientation.z = quaternions.item(2)
-        pose_goal.orientation.w = quaternions.item(3)
+        pose_goal.orientation.x = quaternions.item(0) / 1000
+        pose_goal.orientation.y = quaternions.item(1) / 1000
+        pose_goal.orientation.z = quaternions.item(2) / 1000
+        pose_goal.orientation.w = quaternions.item(3) / 1000
         pose_goal.position.x = position.item(0)
         pose_goal.position.y = position.item(1)
         pose_goal.position.z = position.item(2)
         
-        print(pose_goal)
-
         move_group.set_pose_target(pose_goal)
-        plan = move_group.plan()
+        move_group.go(wait=True)
+        move_group.stop()
 
-        sleep(20)
+        #TODO:Grab AK capture from the AK topic
+            
         move_group.clear_pose_targets()
 
 if __name__ == '__main__':
+    # Initialize commandline argument parser
+    parser = argparse.ArgumentParser(
+        description="SSR scanning program"
+    ) 
+
+    # Add parameter(s)
+    parser.add_argument('input_file', help="Pass filepath to MOD file for scanning")
+
+    # Parse the arguments
+    args = parser.parse_args()
+
+    filepath = os.path.abspath(args.input_file[0])
+
     try:
-        Scanner()
+        scan(filepath)
     except rospy.ROSInterruptException:
         pass
