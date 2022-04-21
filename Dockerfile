@@ -12,6 +12,9 @@ CMD bash && \
     # Clone repo that has all ros packages needed for the system
     git clone https://github.com/lyoder3/ssr_docker.git && \
     cd .. && rosdep update && \
+    apt install curl && \
+    apt update && \
+    apt install ros-melodic-moveit && \
     # Install all ROS dependencies for our ROS packages
     rosdep install --from-paths src/ --ignore-src --rosdistro melodic && \
     # Build everything
