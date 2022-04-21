@@ -13,11 +13,8 @@ CMD bash && \
     git clone https://github.com/lyoder3/ssr_docker.git && \
     cd .. && rosdep update && \
     # Install all ROS dependencies for our ROS packages
-    rosdep install --from-paths src/ --ignore-src --rosidsto melodic && \
+    rosdep install --from-paths src/ --ignore-src --rosdistro melodic && \
     # Build everything
     catkin_make && \
     # Source the setup file so we can operate ROS within our new workspace
     source /ssr_ros/devel/setup.bash \
-
-
-# Usage instructions in Readme.md
