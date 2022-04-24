@@ -1,7 +1,7 @@
 import re
 import numpy as np
 
-def isMoveL(line:str):
+def isMoveL(line):
     expr = re.compile('MoveL')
     return expr.search(line)
 
@@ -10,19 +10,17 @@ def getPose(line):
     pose = expr.search(line).group(0)
     return pose 
 
-def getQuaternions(pose) -> np.ndarray:
+def getQuaternions(pose):
     expr = re.compile(r'(-{0,1}\d+\.{1}\d+,){3}(-{0,1}\d+\.{1}\d+)')
 
     return np.array(expr.search(pose).group(0).split(','),dtype=np.float32)
 
-def getPosition(pose) -> np.ndarray:
+def getPosition(pose):
     expr = re.compile(r'(-{0,1}\d+\.{1}\d+,){2}(-{0,1}\d+\.{1}\d+)')
 
     return np.array(expr.search(pose).group(0).split(','),dtype=np.float32)
 
-def read_file(filepath:str):
-    filepath = r"/home/logan/ROS/abb_ros/AugmentedRoboticFabrication/T_ROB/doTest_100_T_ROB1.mod"
-    
+def read_file(filepath):
     with open(filepath, "r") as f:
         l = f.readline()
         

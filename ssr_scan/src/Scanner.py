@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 import sys
 import os
 import MODParser as mp
@@ -92,10 +92,10 @@ def scan(filepath, out_path):
         depth_image_msg = rospy.wait_for_message("/depth/image_raw")
 
         rgb_img = Image.fromarray(np.array(rgb_image_msg.data)).convert('RGB')
-        rgb_img.save(f"/output/rgb/{ii}_rgb.jpg")
+        rgb_img.save("/output/rgb/{}_rgb.jpg".format(ii))
 
         depth_img = Image.fromarray(np.array(depth_image_msg.data))
-        depth_img.save(f'/output/depth/{ii}_depth.png')
+        depth_img.save('/output/depth/{}_depth.png'.format(ii))
 
         move_group.clear_pose_targets()
 
