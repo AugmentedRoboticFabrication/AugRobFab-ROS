@@ -7,6 +7,9 @@ ENV DISPLAY=host.docker.internal:0.0
 # Create the output file directory (image storage)
 RUN mkdir -p /output/rgb && mkdir -p /output/depth
 
+# Create the scan file directory 
+RUN mkdir -p /input
+
 # Creates the catkin workspace directory structure
 RUN mkdir -p ssr_ros/src 
 
@@ -17,5 +20,7 @@ RUN cd ssr_ros && git clone https://github.com/lyoder3/ssr_docker.git src
 RUN apt update
 RUN rosdep update 
 RUN rosdep install --from-paths src/ --ignore-src -y --rosdistro melodic
+RUN apt install ros-melodic-moveit
+RUN "/ros_entrypoint.sh" && cd ssr_ros && catkin_make
 
 CMD bash
