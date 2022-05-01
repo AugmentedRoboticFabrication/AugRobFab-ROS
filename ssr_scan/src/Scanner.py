@@ -44,7 +44,6 @@ def scan(filepath, out_path):
     rgb_caminfo_msg = rospy.wait_for_message("/rgb/camera_info")
     depth_caminfo_msg = rospy.wait_for_message("/depth/camera_info")
 
-
     # TODO: Write the calibration information to a file
     
     # Create a robot object
@@ -91,6 +90,7 @@ def scan(filepath, out_path):
         rgb_image_msg = rospy.wait_for_message("/rgb/image_raw")
         depth_image_msg = rospy.wait_for_message("/depth/image_raw")
 
+        # Write images to files
         rgb_img = Image.fromarray(np.array(rgb_image_msg.data)).convert('RGB')
         rgb_img.save("/output/rgb/{}_rgb.jpg".format(ii))
 
