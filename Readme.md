@@ -38,3 +38,15 @@
 6. `source ./devel/setup.bash` to activate
 7. Visit ROS documentation for `rosnode` `roscore` `rostopic` and `roslaunch` to learn more about the workspace.
 8. To execute a scan, you have to have a roscore running in one window. Open a new terminal on your PC, connect to the container again with step 4. Activate the workspace in this new window, and then use `roslaunch abb_irb2400_moveit_config moveit_planning_execution.launch robot_ip:=100.0.0.1` where the IP address matches the IP of the robot. Finally, open a third terminal, connect to the container again. Acitvate the workspace. Run the scan script using `rosrun ssr_scan Scanner.py` you may have to move to `src/ssr_scan/src` and `chmod +x Scanner.py` to make the file executable.
+
+
+## New Setup
+0. Clone this repo (https://github.com/AugmentedRoboticFabrication/AugRobFab-ROS) using `git clone https://github.com/AugmentedRoboticFabrication/AugRobFab-ROS`
+1. Inside the cloned GitHub folder, use `docker build . -t ssr_ros` to build the docker image. Read the comments in this file to get an idea of how the container is laid out.
+2. Once this is complete, run `docker run --rm -d ssr-ros:latest` to launch the container.
+3. Use `docker ps` to get the container ID of the running container.
+4. Use `docker exec -it container_id bash` to access the running container's terminal. Note: replace container_id with your container id from step 3
+5. Run `source /opt/ros/melodic/setup.bash`, then `cd ssr_ros` & `catkin_make` to build the workspace
+6. `source ./devel/setup.bash` to activate
+7. Visit ROS documentation for `rosnode` `roscore` `rostopic` and `roslaunch` to learn more about the workspace.
+8. To execute a scan, you have to have a roscore running in one window. Open a new terminal on your PC, connect to the container again with step 4. Activate the workspace in this new window, and then use `roslaunch abb_irb2400_moveit_config moveit_planning_execution.launch robot_ip:=100.0.0.1` where the IP address matches the IP of the robot. Finally, open a third terminal, connect to the container again. Acitvate the workspace. Run the scan script using `rosrun ssr_scan Scanner.py` you may have to move to `src/ssr_scan/src` and `chmod +x Scanner.py` to make the file executable.
