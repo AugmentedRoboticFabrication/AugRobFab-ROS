@@ -42,7 +42,7 @@
 
 ## New Setup
 0. Clone this repo (https://github.com/AugmentedRoboticFabrication/AugRobFab-ROS) using `git clone https://github.com/AugmentedRoboticFabrication/AugRobFab-ROS`
-1. Inside the cloned GitHub folder, use `docker build . -t ssr_ros` to build the docker image. Read the comments in this file to get an idea of how the container is laid out.
+1. Download Docker, create an account. Run command `docker login` to prevent permissions error. Inside the cloned GitHub folder, use `docker build . -t ssr_ros` to build the docker image. Read the comments in this file to get an idea of how the container is laid out.
 2. Once this is complete, run `docker run --rm -d ssr-ros:latest` to launch the container.
 3. Use `docker ps` to get the container ID of the running container.
 4. Use `docker exec -it container_id bash` to access the running container's terminal. Note: replace container_id with your container id from step 3
