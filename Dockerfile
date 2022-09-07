@@ -14,7 +14,9 @@ RUN mkdir -p /input
 RUN mkdir -p ssr_ros/src 
 
 # Clone repo that has all ros packages needed for the system
-RUN cd ssr_ros && git clone https://github.com/lyoder3/ssr_docker.git src
+RUN cd ssr_ros 
+
+# && git clone https://github.com/lyoder3/ssr_docker.git src
 
 # Install all ROS dependencies for our ROS packages
 RUN apt update
