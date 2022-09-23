@@ -38,7 +38,7 @@ def read_file(filepath):
             l = f.readline()
         return output
 def main():
-    filepath = r"/home/logan/ROS/abb_ros/AugmentedRoboticFabrication/T_ROB/doTest_100_T_ROB1.mod"
+    filepath = input('Input the full path and filename of the .mod pose position file') # filepath = r"/home/logan/ROS/abb_ros/AugmentedRoboticFabrication/T_ROB/doTest_100_T_ROB1.mod"
     read_file(filepath)
 
 if __name__ == '__main__':
