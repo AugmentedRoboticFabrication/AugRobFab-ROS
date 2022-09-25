@@ -49,4 +49,8 @@
 5. Run `source /opt/ros/melodic/setup.bash`, then `cd ssr_ros` & `catkin_make` to build the workspace
 6. `source ./devel/setup.bash` to activate
 7. Visit ROS documentation for `rosnode` `roscore` `rostopic` and `roslaunch` to learn more about the workspace.
-8. To execute a scan, you have to have a roscore running in one window. Open a new terminal on your PC, connect to the container again with steps 4-6. Activate the workspace in this new window, and then use `roslaunch abb_irb2400_moveit_config moveit_planning_execution.launch robot_ip:=100.0.0.1` where the IP address matches the IP of the robot. Finally, open a third terminal, connect to the container again. Acitvate the workspace. Run the scan script using `rosrun ssr_scan Scanner.py` you may have to move to `src/ssr_scan/src` and `chmod +x Scanner.py` to make the file executable.
+8. To execute a scan:
+   
+   a. Open a new terminal on your PC, connect to the container again with steps 4-6. Activate the workspace in this new window, and then use `roslaunch abb_irb2400_moveit_config moveit_planning_execution.launch robot_ip:=192.168.125.1 sim:=false`. The argument `sim:=false` means the command will attempt to connect to the IRC5 controller. To ensure this works, make sure you are following the instructions from http://wiki.ros.org/abb_driver/Tutorials/RunServer
+   
+   b. Open a third terminal, connect to the container again. Acitvate the workspace. Move to src/ssr_scan/src using `cd src/ssr_scan/src` and `chmod +x Scanner.py` to make the file executable. Finally, run the scan script using `rosrun ssr_scan Scanner.py`.
