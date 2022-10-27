@@ -1,4 +1,14 @@
 #!/usr/bin/python
+
+#   MoveRob.py
+#   
+#   Author: Logan Yoder
+#
+#   Contributors: Tom Geveke, Sebastian Schweitzer, Dean Taipale
+#   
+#   Description:
+
+
 import sys
 import copy
 import os
@@ -8,6 +18,17 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
+
+
+import JtsnCommand as JC
+
+
+#   
+#   Function: scan
+#   Parameters: filepath - 
+#               out_path - 
+#   Description:
+#   
 
 def scan(filepath, out_path):
     print ("====initializing setup====")
@@ -38,6 +59,16 @@ def scan(filepath, out_path):
     for pose in poses:
         move(group, pose)
 
+        JC.take_image()
+
+        #wait
+        
+
+#   
+#   Function: move
+#   Description:
+#   
+
 def move(group, pose):   	
     pose_target = geometry_msgs.msg.Pose()
 	
@@ -66,13 +97,22 @@ def move(group, pose):
     group.go(wait=True)
     
     group.clear_pose_targets()
+
+
+# main method
 if __name__ == '__main__':
 
-    filepath = os.path.abspath('/home/sebastian/Downloads/scanComp_3_1000_45_T_ROB1.mod')
-    out_path = os.path.abspath('/output/')
+    #todo: switch to globals?
+    #filepath = os.path.abspath('/home/sebastian/Downloads/scanComp_3_1000_45_T_ROB1.mod')
+    #out_path = os.path.abspath('/output/')
 
     try:
-        scan(filepath,out_path)
+        #scan(filepath,out_path)
+
+        JC.run_feedback_listener() # shouldn't block
+
+        JC.run_command_publisher() # should block
+
     except rospy.ROSInterruptException:
         pass
 
