@@ -1,4 +1,10 @@
 #!/usr/bin/python
+#   Scanner.py
+#   
+#   Author: Logan Yoder
+#   
+#   Description: Team 1's movement script
+
 import sys
 import os
 import MODParser as mp

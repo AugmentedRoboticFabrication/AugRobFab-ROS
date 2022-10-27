@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+
+#   MoveRob.py
+#   
+#   Author: Dean Taipale
+#
+#   Contributors: 
+#   
+#   Description:
+
 import rospy
 import sys
 from std_msgs.msg import String

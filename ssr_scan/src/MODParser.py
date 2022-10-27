@@ -1,6 +1,12 @@
 import re
 import numpy as np
 
+#   MODParser.py
+#   
+#   Author: Logan Yoder
+#
+#   Contributors: Tom Geveke
+
 def isMoveL(line):
     expr = re.compile('MoveL')
     return expr.search(line)

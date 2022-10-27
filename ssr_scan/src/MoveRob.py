@@ -2,11 +2,11 @@
 
 #   MoveRob.py
 #   
-#   Author: Logan Yoder
+#   Author of original: Logan Yoder
 #
 #   Contributors: Tom Geveke, Sebastian Schweitzer, Dean Taipale
 #   
-#   Description:
+#   Description: Team 2's movement script
 
 
 import sys
