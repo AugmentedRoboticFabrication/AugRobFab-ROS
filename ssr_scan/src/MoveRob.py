@@ -37,7 +37,7 @@ def scan(filepath, out_path):
 
     robot = moveit_commander.RobotCommander()
 
-    scenen = moveit_commander.PlanningSceneInterface()
+    scene = moveit_commander.PlanningSceneInterface()
 
     group = moveit_commander.MoveGroupCommander("manipulator")
 
@@ -60,7 +60,7 @@ def scan(filepath, out_path):
         move(group, pose)
 
         JC.take_image()
-
+        rospy.sleep(3)
         #wait
         
 
@@ -88,9 +88,8 @@ def move(group, pose):
     pose_target.orientation.z = quaternions.item(2)
     pose_target.orientation.w = quaternions.item(3)
     
-    group.set_goal_tolerance(0.5)
     
-    group.set_planning_time(10)
+
     
     group.set_pose_target(pose_target)
 
@@ -103,15 +102,12 @@ def move(group, pose):
 if __name__ == '__main__':
 
     #todo: switch to globals?
-    #filepath = os.path.abspath('/home/sebastian/Downloads/scanComp_3_1000_45_T_ROB1.mod')
-    #out_path = os.path.abspath('/output/')
+    filepath = os.path.abspath('/home/sebastian/Downloads/scanComp_3_1000_45_T_ROB1.mod')
+    out_path = os.path.abspath('/output/')
 
     try:
-        #scan(filepath,out_path)
+        scan(filepath,out_path)
 
-        JC.run_feedback_listener() # shouldn't block
-
-        JC.run_command_publisher() # should block
 
     except rospy.ROSInterruptException:
         pass
