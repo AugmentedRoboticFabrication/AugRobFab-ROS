@@ -4,7 +4,7 @@
 #   
 #   Author: Dean Taipale
 #
-#   Contributors: 
+#   Contributors: Sebastian Schweitzer
 #   
 #   Description:
 
@@ -14,79 +14,31 @@ from std_msgs.msg import String
 from threading import Semaphore
 
 
-
-#readySem = Semaphore()
-
 p = rospy.Publisher('jtsn_cmd', String, queue_size=10)
-#rospy.init_node('publisher_node', anonymous=True)
 
 #   
-#   Function: run_command_publisher
-#   Description: Run the command-sending node
-#   
+#   Function: feedback_callback
+#   Description: called whenever the subscriber recieves data on jtsn_fbk
+#  
 
-def run_command_publisher():
-    rospy.loginfo("trying init_node")
-    
-    #rospy.init_node('publisher_node', anonymous=True)
-    #p = rospy.Publisher('jtsn_cmd', String, queue_size=10)
-    #rospy.init_node('publisher_node', anonymous=True)
+def feedback_callback(data):
+    print("Recieved feedback: " + str(data.data))  
 
-    rospy.loginfo("Publisher running\n")
-
-    r = rospy.Rate(1)
-
-    while not rospy.is_shutdown():
-        take_image()
-    	#for line in sys.stdin:
-        #    p.publish(line)
-        r.sleep() 
-
-    rospy.loginfo("Publisher shutdown")
+rospy.Subscriber('jtsn_fbk', String, feedback_callback)
 
 #   
-#   Function: run_feedback_listener
-#   Description: Run the feedback-listening node
-#   
-
-def run_feedback_listener():
-    rospy.loginfo("trying init_node")
-
-    rospy.init_node("subscriber_Node", anonymous=True)
-    rospy.Subscriber('jtsn_feedback', String, callback)
-
-    rospy.loginfo("Subscriber running\n")
-    #rospy.spin()
-
-
-
-def callback(data):
-    print(data.data)
-    print('poop')    
-#   
-#   Function: 
-#   Description: send an arbitrary message to the jtsn_cmd channel
+#   Function: take_image
+#   Description: send the command to take a picture
 #  
 
 def take_image():
-
-    
-    print("sending y")
+    print("Sending Capture command")
     p.publish("x")
-    
-
 
 #   
-#   Function: 
+#   Function: say
 #   Description: send an arbitrary message to the jtsn_cmd channel
 #   
 
 def say(message):
     p.publish(message)
-
-
-if __name__ == '__main__':
-    try:
-        run_publisher()
-    except rospy.ROSInterruptException:
-        pass
