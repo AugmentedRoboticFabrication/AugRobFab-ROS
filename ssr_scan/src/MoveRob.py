@@ -20,7 +20,7 @@ import moveit_msgs.msg
 import geometry_msgs.msg
 
 
-import JtsnCommand as JC
+import JtsnCommander as JC
 
 
 #   
