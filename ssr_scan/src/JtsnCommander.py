@@ -6,7 +6,7 @@
 #
 #   Contributors: Sebastian Schweitzer
 #   
-#   Description:
+#   Description: Methods for the PC side of PC-Jetson communication
 
 import rospy
 import sys
