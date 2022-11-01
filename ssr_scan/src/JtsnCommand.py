@@ -43,3 +43,50 @@ def run_command_publisher():
         r.sleep() 
 
     rospy.loginfo("Publisher shutdown")
+
+#   
+#   Function: run_feedback_listener
+#   Description: Run the feedback-listening node
+#   
+
+def run_feedback_listener():
+    rospy.loginfo("trying init_node")
+
+    rospy.init_node("subscriber_Node", anonymous=True)
+    rospy.Subscriber('jtsn_feedback', String, callback)
+
+    rospy.loginfo("Subscriber running\n")
+    #rospy.spin()
+
+
+
+def callback(data):
+    print(data.data)
+    print('poop')    
+#   
+#   Function: 
+#   Description: send an arbitrary message to the jtsn_cmd channel
+#  
+
+def take_image():
+
+    
+    print("sending y")
+    p.publish("x")
+    
+
+
+#   
+#   Function: 
+#   Description: send an arbitrary message to the jtsn_cmd channel
+#   
+
+def say(message):
+    p.publish(message)
+
+
+if __name__ == '__main__':
+    try:
+        run_publisher()
+    except rospy.ROSInterruptException:
+        pass
