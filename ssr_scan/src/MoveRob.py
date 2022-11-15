@@ -60,8 +60,6 @@ def scan(filepath, out_path):
         move(group, pose)
 
         JC.take_image()
-        rospy.sleep(3)
-        #wait
         
 
 #   
