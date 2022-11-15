@@ -1,44 +1,53 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #   MoveRob.py
 #   
 #   Author: Dean Taipale
 #
-#   Contributors: Sebastian Schweitzer
+#   Contributors: Sebastian Schweitzer, Lin Jia
 #   
 #   Description: Methods for the PC side of PC-Jetson communication
 
+#import yaml
 import rospy
 import sys
 from std_msgs.msg import String
-from threading import Semaphore
+#from threading import Semaphore
+import os
 
-
-p = rospy.Publisher('jtsn_cmd', String, queue_size=10)
-
-#   
-#   Function: feedback_callback
-#   Description: called whenever the subscriber recieves data on jtsn_fbk
-#  
-
-def feedback_callback(data):
-    print("Recieved feedback: " + str(data.data))  
-
-rospy.Subscriber('jtsn_fbk', String, feedback_callback)
-
-#   
-#   Function: take_image
-#   Description: send the command to take a picture
-#  
+delay = 3
 
 def take_image():
-    print("Sending Capture command")
-    p.publish("x")
+    rospy.sleep(delay)
+    os.system('rosservice call /image_saver/save')
+    
+    
+# Debug methods
 
-#   
-#   Function: say
-#   Description: send an arbitrary message to the jtsn_cmd channel
-#   
+def debug_client():
+    rospy.init_node('debug_pc_node', anonymous=True)
 
-def say(message):
-    p.publish(message)
+    print("Command Debugger Node Running\nPlease run the jetson node now.")
+
+    s = input("Is it running?[y/n]\n")
+
+    if s != 'y':
+        print("quiting")
+        return
+
+    while True:
+        s = input("trigger image? [y/n]\n")
+
+        if s != 'y':
+            print("quiting")
+            return
+        
+        take_image()
+
+if __name__ == '__main__':
+    try:
+        
+        debug_client()
+
+    except rospy.ROSInterruptException:
+        pass
