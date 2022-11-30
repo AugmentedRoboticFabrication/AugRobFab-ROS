@@ -18,11 +18,14 @@ import subprocess
 
 delay = 3
 
+#runs a subprocess node to save our images when triggered
 subprocess.Popen('rosrun image_view image_saver image:=/rgb/image_raw _save_all_image:=false __name:=image_saver'.split())
 
 
 def take_image():
     rospy.sleep(delay)
+    
+    #trigger saving
     os.system('rosservice call /image_saver/save')
     
     
