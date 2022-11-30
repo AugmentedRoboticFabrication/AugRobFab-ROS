@@ -14,8 +14,12 @@ import sys
 from std_msgs.msg import String
 #from threading import Semaphore
 import os
+import subprocess
 
 delay = 3
+
+subprocess.Popen('rosrun image_view image_saver image:=/rgb/image_raw _save_all_image:=false __name:=image_saver'.split())
+
 
 def take_image():
     rospy.sleep(delay)
@@ -43,6 +47,11 @@ def debug_client():
             return
         
         take_image()
+
+
+
+
+
 
 if __name__ == '__main__':
     try:
