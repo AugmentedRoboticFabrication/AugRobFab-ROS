@@ -1,3 +1,5 @@
+The following is the license applicable to the abb_driver and all abb_irb2400 packages. LICENSE.md applies to all other files.
+
 Copyright (c) 2020, ABB Schweiz AG
 All rights reserved.
 
