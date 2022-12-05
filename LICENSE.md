@@ -1,3 +1,5 @@
+This license does not apply to abb_driver or any abb_irb2400 packages. Those rights belong to and are reserved by ABB. 
+
 MIT License
 
 Copyright (c) 2022 PSU ForMat Architecture
