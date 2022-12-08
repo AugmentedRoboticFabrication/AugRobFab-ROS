@@ -27,7 +27,7 @@ import JtsnCommander as JC
 #   Function: scan
 #   Parameters: filepath - 
 #               out_path - 
-#   Description:
+#   Description: Scan Initializes the Robot,Zeros the joints, and then reads the input file.
 #   
 
 def scan(filepath, out_path):
@@ -64,7 +64,8 @@ def scan(filepath, out_path):
 
 #   
 #   Function: move
-#   Description:
+#   Description: Move function uses MODparser to fill the quaternion and xyz values arrays.
+#   It then sets the pose and increments the array position.
 #   
 
 def move(group, pose):   	
@@ -100,7 +101,7 @@ def move(group, pose):
 if __name__ == '__main__':
 
     #todo: switch to globals?
-    filepath = os.path.abspath('/home/sebastian/Downloads/scanComp_3_1000_45_T_ROB1.mod')
+    filepath = os.path.abspath('')
     out_path = os.path.abspath('/output/')
 
     try:
