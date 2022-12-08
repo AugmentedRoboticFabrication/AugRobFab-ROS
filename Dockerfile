@@ -1,27 +1,31 @@
-# Start with the official ros melodic image
-FROM ros:melodic-ros-base
+#Official Ros Noetic Image
+FROM ros:noetic-ros-base
+RUN apt update
+RUN apt-get install -y ros-noetic-trac-ik-kinematics-plugin
+RUN apt-get install -y ros-noetic-image-view 
 
-# Makes it possible to run GUI apps from inside the container
-ENV DISPLAY=host.docker.internal:0.0 
-
-# Create the output file directory (image storage)
+ENV DISPLAY=host.docker.internal:0.0
 RUN mkdir -p /output/rgb && mkdir -p /output/depth
 
-# Create the scan file directory, this is where you copy your .mod file to 
 RUN mkdir -p /input
 
-# Creates the catkin workspace directory structure
-RUN mkdir -p ssr_ros/src 
+ADD *.mod /input
 
-# Clone repo that has all ros packages needed for the system
-RUN cd ssr_ros 
+RUN mkdir -p ABB_WS/src
 
-# && git clone https://github.com/lyoder3/ssr_docker.git src
+ADD ssr_scan ABB_WS/src/ssr_scan 
 
-# Install all ROS dependencies for our ROS packages
+ADD abb_irb2400_moveit_config ABB_WS/src/abb_irb2400_moveit_config
+
+ADD abb_irb2400_moveit_plugins ABB_WS/src/abb_irb2400_moveit_plugins
+
+ADD abb_irb2400_support  ABB_WS/src/abb_irb2400_support
+
 RUN apt update
-RUN rosdep update 
-RUN cd ssr_ros && rosdep install --from-paths src/ --ignore-src -y --rosdistro melodic
-RUN apt install ros-melodic-moveit -y
+RUN rosdep update
+
+RUN cd ABB_WS && rosdep install --from-paths src/ --ignore-src -y --rosdistro noetic
+
+RUN apt install ros-noetic-moveit -y
 
 CMD bash
