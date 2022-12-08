@@ -101,7 +101,7 @@ def move(group, pose):
 if __name__ == '__main__':
 
     #todo: switch to globals?
-    filepath = os.path.abspath('')
+    filepath = os.path.abspath('#add path to your Scan.mod location')
     out_path = os.path.abspath('/output/')
 
     try:
