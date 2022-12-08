@@ -22,6 +22,12 @@ delay = 3
 subprocess.Popen('rosrun image_view image_saver image:=/rgb/image_raw _save_all_image:=false __name:=image_saver'.split())
 
 
+#   
+#   Function: take_image
+#
+#   Description: Call the service to save an image from the Jetson's image topic stream
+#   
+
 def take_image():
     rospy.sleep(delay)
     
@@ -30,6 +36,12 @@ def take_image():
     
     
 # Debug methods
+
+#   
+#   Function: debug_client
+#
+#   Description: Interactible method run only if this script is run as main. Allows the user to manually trigger image-saving.
+#   
 
 def debug_client():
     rospy.init_node('debug_pc_node', anonymous=True)
@@ -50,9 +62,6 @@ def debug_client():
             return
         
         take_image()
-
-
-
 
 
 
