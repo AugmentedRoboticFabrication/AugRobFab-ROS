@@ -1,5 +1,8 @@
 # SSR ROS Install Process
 
+
+WARNING: This document is out of date. See the Documentation Packet for the most recent information
+
 ## Pre-reqs
 * Git installed on your PC
 * Github account and access to the SSR repository
