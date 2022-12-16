@@ -1,7 +1,7 @@
 # SSR ROS Install Process
 
 
-WARNING: This document is out of date. See the Documentation Packet for the most recent information
+**WARNING: This document is out of date. See the Documentation Packet for the most recent information**
 
 ## Pre-reqs
 * Git installed on your PC
